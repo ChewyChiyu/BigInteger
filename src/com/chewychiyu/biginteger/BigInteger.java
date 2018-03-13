@@ -234,7 +234,10 @@ public class BigInteger {
 	}
 	
 	public BigInteger binary(){
-		
+		return this.base(TWO);
+	}
+	
+	public BigInteger base(BigInteger base){
 		if(!positive){
 			return new BigInteger("1"+positive().binary().trim().toString());
 		}
@@ -242,9 +245,10 @@ public class BigInteger {
 		StringBuilder binary = new StringBuilder("0");
 
 		BigInteger big = clone(this);
+		
 		while(big.compare(ZERO)==1){
 			binary.insert(1, big.even()?0:1);
-			big = big.divide(TWO);
+			big = big.divide(base);
 		}
 		
 		return new BigInteger(binary.toString());
