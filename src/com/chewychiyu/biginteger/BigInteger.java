@@ -11,6 +11,7 @@ public class BigInteger {
 	public final static BigInteger TEN = new BigInteger("10");
 	public final static BigInteger ZERO = new BigInteger("0");
 	public final static BigInteger ONE = new BigInteger("1");
+	public final static BigInteger TWO = new BigInteger("2");
 
 	public BigInteger(String digit_string){
 		if(digit_string.charAt(0) =='-'){
@@ -231,7 +232,24 @@ public class BigInteger {
 		}
 		return new BigInteger(str.toString());
 	}
+	
+	public BigInteger binary(){
+		
+		if(!positive){
+			return new BigInteger("1"+positive().binary().trim().toString());
+		}
+		
+		StringBuilder binary = new StringBuilder("0");
 
+		BigInteger big = clone(this);
+		while(big.compare(ZERO)==1){
+			binary.insert(1, big.even()?0:1);
+			big = big.divide(TWO);
+		}
+		
+		return new BigInteger(binary.toString());
+	}
+	
 	public BigInteger clone(BigInteger big){
 		return new BigInteger(big.toString());
 	}
