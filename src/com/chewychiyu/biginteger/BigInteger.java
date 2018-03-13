@@ -29,7 +29,7 @@ public class BigInteger {
 		new BigInteger(""+num);
 	}
 
-	public byte[] string_to_array(String digit_string){
+	private byte[] string_to_array(String digit_string){
 		byte[] array = new byte[digit_string.length()];
 		for(int index = 0; index < digit_string.length(); index++){
 			String possible_digit = digit_string.substring(index,index+1);
@@ -135,7 +135,7 @@ public class BigInteger {
 	}
 
 	public BigInteger multiply(BigInteger big){
-
+		//how's my O(N^3) function huh
 		if(big.equal(ZERO)||equal(ZERO)){
 			return ZERO;
 		}
@@ -223,7 +223,35 @@ public class BigInteger {
 		}
 		return factor;
 	}
-
+	
+	public BigInteger pow(BigInteger big){
+		if(!big.positive){ return ZERO; }
+		if(big.equal(ZERO)){ return ONE; }
+		if(this.equal(ZERO)){ return ZERO; }
+		//binary exponentiation, negative exp not supported
+		BigInteger exp = big.binary();
+		BigInteger value = null;
+		for(int exp_index = exp.digits.length-1; exp_index >=0; exp_index--){
+			if(exp.digits[exp_index]==0){ continue; }
+			BigInteger exp_beta = ONE;
+			for(int inner_index = 0; inner_index < exp.digits.length-1-exp_index; inner_index++){
+				exp_beta = exp_beta.multiply(TWO);
+			}
+			BigInteger value_beta = clone(this);
+			BigInteger counter = ONE;
+			while(counter.compare(exp_beta)==-1){
+				value_beta = value_beta.multiply(this);
+				counter = counter.add(ONE);
+			}
+			if(value == null){
+				value = value_beta;
+			}else{
+				value = value.multiply(value_beta);
+			}
+		}
+		return value;
+	}
+	
 	public BigInteger truncate(int begin, int end){
 		if(begin > end || begin*end<0 || end > digits.length){ return ZERO; }
 		StringBuilder str = new StringBuilder();
@@ -353,7 +381,7 @@ public class BigInteger {
 		return new BigInteger(str.toString());
 	}
 
-	public byte[] get_digits(){
+	public byte[] digits(){
 		return digits;
 	}
 

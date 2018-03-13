@@ -21,7 +21,8 @@ A BigInteger Library In Java
   BigInteger big_c = big_a.multiply(big_b);  
   BigInteger big_c = big_a.divide(big_b);
   BigInteger big_b = big_a.factorial();
-  
+  BigInteger big_c = big_a.pow(big_b);
+    
   /* change base */
   BigInteger big_b = big_a.binary();
   BigInteger big_c = big_a.base(big_b);
