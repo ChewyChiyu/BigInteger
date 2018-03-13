@@ -208,7 +208,7 @@ public class BigInteger {
 		}
 		return new BigInteger(quotient.toString()).trim();
 	}
-
+	
 	public BigInteger factorial(){
 
 		if(!positive){
@@ -238,6 +238,7 @@ public class BigInteger {
 	}
 	
 	public BigInteger base(BigInteger base){
+		
 		if(!positive){
 			return new BigInteger("1"+positive().binary().trim().toString());
 		}
