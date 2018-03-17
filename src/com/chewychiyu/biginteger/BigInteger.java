@@ -155,13 +155,14 @@ public class BigInteger {
 		BigInteger factor_large = (big.compare(this)==1) ? big : this;
 		BigInteger factor_small = factor_large.equals(big) ? this : big;
 		BigInteger product = ZERO;
-
+		StringBuilder z = new StringBuilder();
+		for(int index = 0; index < factor_large.digits.length*2; index++){ z.append("0"); } 
 		for(int factor_small_index = factor_small.digits.length-1; factor_small_index >=0; factor_small_index--){
 			BigInteger factor_alpha = ZERO;
 			int iteration = factor_small.digits.length-factor_small_index-1;
 			for(int factor_large_index = factor_large.digits.length-1; factor_large_index >=0; factor_large_index--){
 				StringBuilder num = new StringBuilder(""+(factor_large.digits[factor_large_index] *  factor_small.digits[factor_small_index]));
-				for(int index = 0; index < iteration; index++){ num.append("0"); } 
+				num.append(z.substring(0,iteration));
 				factor_alpha = factor_alpha.add(new BigInteger(num.toString()));
 				iteration++;
 			}
@@ -229,6 +230,7 @@ public class BigInteger {
 		if(big.equal(ZERO)){ return ONE; }
 		if(this.equal(ZERO)){ return ZERO; }
 		//binary exponentiation, negative exp not supported
+		
 		BigInteger exp = big.binary();
 		BigInteger value = null;
 		for(int exp_index = exp.digits.length-1; exp_index >=0; exp_index--){
